@@ -12,7 +12,6 @@ const config: Config = {
         primary: "#C8392D",
         secundary: "#FFF6F6",
         tertiary: "#373636",
-        error: "#ef4444",
       },
     },
   },
