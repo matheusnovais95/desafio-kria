@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ContainerLayout } from "@/components/ContainerLayout";
 
 export const metadata: Metadata = {
   title: "Github challenge",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={`bg-secundary antialiased`}>{children}</body>
+      <body className={`bg-secundary antialiased`}>
+        <ContainerLayout>{children}</ContainerLayout>
+      </body>
     </html>
   );
 }

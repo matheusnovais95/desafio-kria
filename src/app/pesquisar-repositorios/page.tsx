@@ -1,8 +1,8 @@
 "use client";
+import React from "react";
 import { Header } from "@/components/Header";
 import { Pagination } from "@/components/Pagination";
 import { fetchGeneralRepositories } from "@/services/api";
-import React from "react";
 
 export default function PesquisarRepositorios() {
   const [repoToSearch, setRepoToSearch] = React.useState("");
