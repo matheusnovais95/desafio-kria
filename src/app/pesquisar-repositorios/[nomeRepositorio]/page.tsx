@@ -7,19 +7,6 @@ import { StarEmpty, StarFill } from "@/components/Icons/icons";
 import React from "react";
 import { Loading } from "@/components/Loading";
 
-type DetalhesRepositoriosProps = {
-  id: number;
-  name: string;
-  description: string;
-  language: string;
-  updated_at: string;
-  owner: {
-    login: string;
-    avatar_url: string;
-  };
-  contributors_url: string;
-};
-
 type CollaboratorProps = {
   login: string;
   avatar_url: string;
@@ -28,7 +15,7 @@ type CollaboratorProps = {
 
 export default function DetalhesRepositorios() {
   const [repository, setRepository] =
-    React.useState<DetalhesRepositoriosProps | null>(null);
+    React.useState<DetalhesRepositoriosSchema | null>(null);
   const [collaborators, setCollaborators] = React.useState<CollaboratorProps[]>(
     []
   );
@@ -43,7 +30,7 @@ export default function DetalhesRepositorios() {
         if (nomeRepositorio) {
           const repositories = await fetchGeneralRepositories(nomeRepositorio);
           const filteredRepository = repositories.find(
-            (repo: DetalhesRepositoriosProps) => repo.name === nomeRepositorio
+            (repo: DetalhesRepositoriosSchema) => repo.name === nomeRepositorio
           );
 
           if (filteredRepository) {
@@ -65,17 +52,19 @@ export default function DetalhesRepositorios() {
   }, [nomeRepositorio]);
 
   React.useEffect(() => {
-    const favoritos = localStorage.getItem("repositoriosFavoritos");
-    const isRepoFavorite = favoritos
-      ? JSON.parse(favoritos).filter(
-          (repo: DetalhesRepositoriosProps) => repo.id === repository?.id
-        ).length > 0
-      : false;
-    setStarFavorite(isRepoFavorite);
+    if (typeof window !== "undefined") {
+      const favoritos = localStorage.getItem("repositoriosFavoritos");
+      const isRepoFavorite = favoritos
+        ? JSON.parse(favoritos).filter(
+            (repo: DetalhesRepositoriosSchema) => repo.id === repository?.id
+          ).length > 0
+        : false;
+      setStarFavorite(isRepoFavorite);
+    }
   }, [repository?.id]);
 
   const addFavorite = () => {
-    if (repository) {
+    if (repository && typeof window !== "undefined") {
       const favoritos = JSON.parse(
         localStorage.getItem("repositoriosFavoritos") || "[]"
       );
@@ -90,16 +79,18 @@ export default function DetalhesRepositorios() {
   };
 
   const removeFavorite = () => {
-    let favoritos = JSON.parse(
-      localStorage.getItem("repositoriosFavoritos") || "[]"
-    );
+    if (typeof window !== "undefined") {
+      let favoritos = JSON.parse(
+        localStorage.getItem("repositoriosFavoritos") || "[]"
+      );
 
-    favoritos = favoritos.filter(
-      (repo: DetalhesRepositoriosProps) => repo.id !== repository?.id
-    );
+      favoritos = favoritos.filter(
+        (repo: DetalhesRepositoriosSchema) => repo.id !== repository?.id
+      );
 
-    localStorage.setItem("repositoriosFavoritos", JSON.stringify(favoritos));
-    setStarFavorite(false);
+      localStorage.setItem("repositoriosFavoritos", JSON.stringify(favoritos));
+      setStarFavorite(false);
+    }
   };
 
   return (

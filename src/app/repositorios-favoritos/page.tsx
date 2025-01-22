@@ -4,9 +4,9 @@ import Link from "next/link";
 import React from "react";
 
 export default function RepositoriosFavoritos() {
-  const favoritesRepositories = JSON.parse(
+  const favoritesRepositories = typeof window !== "undefined" ? JSON.parse(
     localStorage.getItem("repositoriosFavoritos") || "[]"
-  );
+  ) : [];
 
   return (
     <div className="w-screen h-full relative">
