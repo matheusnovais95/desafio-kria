@@ -22,7 +22,7 @@ export default function RepositoriosFavoritos() {
               href={`/pesquisar-repositorios/${repository.name}`}
               key={repository.id}
             >
-              <li className="w-full px-2 py-4 cursor-pointer bg-primary rounded-md ">
+              <li className="w-full px-2 py-4 cursor-pointer bg-primary rounded-md mt-2">
                 <p className="text-secundary font-bold">{repository.name}</p>
               </li>
             </Link>
