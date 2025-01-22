@@ -17,7 +17,7 @@ export default function RepositoriosFavoritos() {
 
       <div className="w-full h-fit flex justify-start items-center p-3">
         <ul className="w-full p-4">
-          {favoritesRepositories?.map((repository: any) => (
+          {favoritesRepositories?.map((repository: DetalhesRepositoriosSchema) => (
             <Link
               href={`/pesquisar-repositorios/${repository.name}`}
               key={repository.id}

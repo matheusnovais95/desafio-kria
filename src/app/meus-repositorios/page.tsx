@@ -3,7 +3,7 @@
 import { Header } from "@/components/Header";
 import { Loading } from "@/components/Loading";
 import { Pagination } from "@/components/Pagination";
-import { fetchAllRepositories, fetchUserRepositories } from "@/services/api";
+import {  fetchUserRepositories } from "@/services/api";
 import React from "react";
 
 export default function MeusRepositorios() {

@@ -1,5 +1,6 @@
 "use client";
 import { Header } from "@/components/Header";
+import { Loading } from "@/components/Loading";
 import { Pagination } from "@/components/Pagination";
 import { fetchAllRepositories } from "@/services/api";
 import React from "react";
@@ -8,8 +9,12 @@ export const Home = () => {
   const [repositories, setRepositories] = React.useState([]);
   React.useEffect(() => {
     const fetchRepositories = async () => {
-      const repositories = await fetchAllRepositories();
-      setRepositories(repositories);
+      try {
+        const repositories = await fetchAllRepositories();
+        setRepositories(repositories);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchRepositories();
@@ -23,7 +28,11 @@ export const Home = () => {
       />
 
       <div className="w-full h-fit flex justify-center items-center">
-        <Pagination repositories={repositories} itemsPerPage={10} />
+        {repositories.length === 0 ? (
+          <Loading />
+        ) : (
+          <Pagination repositories={repositories} itemsPerPage={10} />
+        )}
       </div>
     </div>
   );
