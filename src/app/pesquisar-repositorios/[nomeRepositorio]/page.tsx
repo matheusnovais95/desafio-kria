@@ -93,8 +93,23 @@ export default function DetalhesRepositorios() {
     }
   };
 
+  function formatarDataISO(dataISO: string): string {
+    const data = new Date(dataISO);
+
+    const dia = String(data.getUTCDate()).padStart(2, "0");
+    const mes = String(data.getUTCMonth() + 1).padStart(2, "0");
+    const ano = data.getUTCFullYear();
+
+    let hora = data.getUTCHours();
+    const periodo = hora >= 12 ? "PM" : "AM";
+    hora = hora % 12 || 12; 
+    const minuto = String(data.getUTCMinutes()).padStart(2, "0");
+
+    return `${dia}/${mes}/${ano} - às ${hora}:${minuto} ${periodo}`;
+  }
+
   return (
-    <div className="h-full relative">
+    <div className="h-full relative overflow-auto">
       <Header
         title="Detalhe do Repositório"
         subtitle="Abaixo você encontrará os detalhes do repositório escolhido e seus colaboradores."
@@ -138,7 +153,7 @@ export default function DetalhesRepositorios() {
                 </p>
                 <p className="text-sm md:text-xl text-primary">
                   <b className="text-tertiary">Última atualização: </b>
-                  {repository.updated_at}
+                  {formatarDataISO(repository.updated_at)}
                 </p>
               </div>
             </div>
@@ -150,7 +165,7 @@ export default function DetalhesRepositorios() {
         )}
       </div>
 
-      <div className="w-full h-fit flex flex-col md:justify-start justify-center items-start p-3">
+      <div className="w-full h-fit flex flex-col md:justify-start justify-center items-start p-3 ">
         <h2 className="text-lg font-bold mb-1 px-4">Colaboradores</h2>
         <ul className="w-full rounded-md px-4 flex flex-col  justify-center items-start ">
           {collaborators.map((collaborator) => (
